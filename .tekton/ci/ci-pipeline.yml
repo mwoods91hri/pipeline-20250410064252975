@@ -235,15 +235,7 @@ spec:
         name: toolchain-extract-value
       params:
         - name: expression
-          value: '|
-          . as $toolchain |
-          ["$(params.repository)"] |
-          if .[0]=="" then
-            ($toolchain.services[] 
-              | select(.toolchain_binding.name=="repo") 
-              | .parameters.repo_url)
-          else .[0]
-          end'
+          value: '["https://github.com/GPACELTD/prov2.0-frontend"]'
         - name: pipeline-debug
           value: $(params.pipeline-debug)
     - name: git-clone
