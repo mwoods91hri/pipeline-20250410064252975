@@ -235,7 +235,7 @@ spec:
         name: toolchain-extract-value
       params:
         - name: expression
-          value: https://github.com/GPACELTD/prov2.0-frontend
+          value: '["https://github.com/GPACELTD/prov2.0-frontend"]' # Correctly formatted array
         - name: pipeline-debug
           value: $(params.pipeline-debug)
     - name: git-clone
