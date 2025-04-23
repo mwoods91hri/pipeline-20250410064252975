@@ -88,7 +88,7 @@ spec:
       description: the visibility for the application. Valid values are 'public', 'private' and 'project'.
       default: "public"
     - name: app-concurrency
-      description: the maximum number of requests that can be processed concurrently per instance. 
+      description: the maximum number of requests that can be processed concurrently per instance.
       default: "100"
     - name: service-bindings
       description: JSON object of a map of names to services instances to be bound to the application
@@ -196,10 +196,10 @@ spec:
     - name: tester-tests-image
       description: Image to use for `unit-test` task
       default: "icr.io/continuous-delivery/pipeline/pipeline-base-ubi:3.46"
-    
+
     # Build related params
     - name: build-strategy
-      description:  The strategy to use for building the image. Valid values are 'dockerfile' and 'buildpacks'. 
+      description: The strategy to use for building the image. Valid values are 'dockerfile' and 'buildpacks'.
       default: "dockerfile"
     - name: build-timeout
       description: the amount of time, in seconds, that can pass before the build run must succeed or fail.
@@ -208,21 +208,21 @@ spec:
       description: the size to use for the build, which determines the amount of resources used. Valid values include small, medium, large, xlarge.
       default: "large"
     - name: deployment-type
-      description:  Specifies the type of deployment. Valid values are 'application' and 'job'. 
+      description: Specifies the type of deployment. Valid values are 'application' and 'job'.
       default: "application"
     - name: build-use-native-docker
-      description:  Optional property to opt-in for using native docker build capabilities as opposed to use Code Engine build to containerize the source. Note this setting only takes effect if the build-strategy is set to 'dockerfile'. Valid values are 'true' and 'false'. 
+      description: Optional property to opt-in for using native docker build capabilities as opposed to use Code Engine build to containerize the source. Note this setting only takes effect if the build-strategy is set to 'dockerfile'. Valid values are 'true' and 'false'.
       default: "false"
     - name: wait-timeout
       description: Maximum timeout for the CLI operation to wait.
       default: "1300"
-    
+
     # Job specific configuration
     - name: job-instances
       description: Specifies the number of instances that are used for runs of the job. When you use this option, the system converts to array indices. For example, if you specify 'instances' of 5, the system converts to 'array-indices' of '0 - 4'
       default: "1"
     - name: job-maxexecutiontime
-      description: The maximum execution time in seconds for runs of the job. 
+      description: The maximum execution time in seconds for runs of the job.
       default: "7200"
     - name: job-retrylimit
       description: The number of times to rerun an instance of the job before the job is marked as failed.
@@ -236,7 +236,7 @@ spec:
       params:
         - name: expression
           # if a params.repository is given, it takes precedence
-          value: '. as $toolchain | ["$(params.repository)"] | if .[0]=="" then $toolchain | .services[] | select(.toolchain_binding.name=="repo") | .dashboard_url else .[0] end'
+          value: '. as $toolchain | ["$(params.repository)"] | if .[0]=="" then $toolchain | .services[] | select(.toolchain_binding.name=="repo") | .parameters.repo_url else .[0] end'
         - name: pipeline-debug
           value: $(params.pipeline-debug)
     - name: git-clone
@@ -482,7 +482,7 @@ spec:
             fi
             IMAGE_TAG=${BUILD_NUMBER}-${IMAGE_TAG}
             echo "Image tag: $IMAGE_TAG"
-            
+
             BUILD_STRATEGY="$(params.build-strategy)"
             echo "Configured build strategy: $BUILD_STRATEGY"
             if [[ "$BUILD_STRATEGY" == "dockerfile" && "$(params.build-use-native-docker)" == "true" ]]; then
@@ -500,7 +500,7 @@ spec:
               apk update
               apk add curl 
               curl -fsSL https://clis.cloud.ibm.com/install/linux | sh
-      
+
               #
               # Make sure that the latest version of Code Engine CLI is installed
               echo "Install the Code Engine plugin"      
@@ -617,7 +617,7 @@ spec:
               # Print the build run logs
               ibmcloud ce buildrun logs --buildrun "${BUILD_RUN_NAME}"
             fi
-            
+
             #
             # Pull the image
             docker pull ${IMAGE_URL}:${IMAGE_TAG}
@@ -695,7 +695,7 @@ spec:
         - name: container-registry-apikey-secret-key
           value: "apikey"
         - name: scan-report-file
-          value: 'app-image-va-report.json'
+          value: "app-image-va-report.json"
         - name: fail-on-scanned-issues
           value: $(params.fail-on-scanned-issues)
         - name: pipeline-debug
