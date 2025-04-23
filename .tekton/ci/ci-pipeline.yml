@@ -231,22 +231,21 @@ spec:
     - name: pipeline-ws
   tasks:
     - name: extract-repository-url
-      taskRef:
-        name: toolchain-extract-value
-      params:
-        - name: expression
-          # if a params.repository is given, it takes precedence
-          value: >
+  taskRef:
+    name: toolchain-extract-value
+  params:
+    - name: expression
+      value: |
         . as $toolchain |
         ["$(params.repository)"] |
         if .[0]=="" then
-          ($toolchain.services[]
-            | select(.toolchain_binding.name=="repo")
+          ($toolchain.services[] 
+            | select(.toolchain_binding.name=="repo") 
             | .parameters.repo_url)
         else .[0]
         end
-        - name: pipeline-debug
-          value: $(params.pipeline-debug)
+    - name: pipeline-debug
+      value: $(params.pipeline-debug)
     - name: git-clone
       taskRef:
         name: git-clone-repo
